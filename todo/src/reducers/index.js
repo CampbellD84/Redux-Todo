@@ -1,18 +1,25 @@
-import { ADD_TODO } from '../actions';
+import { ADD_TODO, TOGGLE_TODO } from '../actions';
 
-const taskReducer = (todos = [], action) => {
-    switch (action.type) {
-        case ADD_TODO: 
-            return [
-                ...todos,
-                {
-                    task: action.task,
-                    completed: false
-                }
-            ]
-        default: 
-            return todos;
-    }
+const initialState = {
+    todos: [
+        {task: "Learn Redux", completed: false},
+        {task: "Learn Material-UI", completed: false}
+    ]
 };
 
-export default taskReducer;
+export const taskReducer = (state = initialState, action) => {
+    switch (action.type) {
+        case ADD_TODO: 
+            return {
+                ...state,
+                todos: [...state.todos, action.payload]
+            };
+        case TOGGLE_TODO:
+            return {
+                ...state,
+                todos: state.todos.map((todo, idx) => action.payload === idx ? {...todo, completed: !todo.completed } : todo)
+            }
+        default: 
+            return state;
+    }
+};

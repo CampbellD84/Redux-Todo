@@ -1,18 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 
 import './index.css';
 import App from './App';
 
-const reducer = () => {
-    return {
-        todos: []
-    }
-}
+import { taskReducer } from './reducers';
 
-const store = createStore(reducer);
+
+const store = createStore(taskReducer);
 
 ReactDOM.render(
     <Provider store={store}>

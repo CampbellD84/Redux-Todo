@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addTodo } from '../actions';
+import { addTodo, toggleTodo } from '../actions';
+
 
 
 class TodoForm extends Component {
@@ -10,7 +11,7 @@ class TodoForm extends Component {
 
     handleChange = e => {
         this.setState({
-            [e.target.name]: e.target.value
+            newTask: e.target.value
         });
     }
 
@@ -19,10 +20,15 @@ class TodoForm extends Component {
         this.props.addTodo(this.state.newTask);
     }
 
+    handleToggleTodo = (e, idx) => {
+        this.props.toggleTodo(idx);
+    }
+
     render() {
         return(
+            <React.Fragment>
             <div>
-                <form action="">
+                <form>
                     <label htmlFor="task">Task
                         <input 
                             type="text" 
@@ -31,9 +37,17 @@ class TodoForm extends Component {
                             onChange={this.handleChange}
                         />
                     </label>
-                    <button type="submit" onClick={() => this.handleAddTodo()}>Add Task</button>
+                    <button onClick={this.handleAddTodo}>Add Task</button>
                 </form>
             </div>
+            <ul>
+            {this.props.todos.map((todo, idx) => (
+                <li onClick={e => this.handleToggleTodo(e, idx)} key={idx}>
+                    {todo.task}
+                </li>
+            ))}
+            </ul>
+            </React.Fragment>
         );
     }
 };
@@ -44,4 +58,6 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, {addTodo})(TodoForm);
+
+
+export default connect(mapStateToProps, { addTodo, toggleTodo})(TodoForm);
