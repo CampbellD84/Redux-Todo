@@ -1,0 +1,38 @@
+.App {
+  max-width: 960px;
+  margin-top: 25px;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+}
+
+.heading {
+  text-align: center;
+}
+
+.task-label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold; 
+}
+
+form button {
+  display: block;
+  margin-top: 10px;
+}
+
+.tasks {
+  margin: 25px 0;
+}
+
+.completed {
+  text-decoration: line-through;
+}
+
+.tasks div button {
+  margin-left: 10px;
+}
+
+.task {
+  margin-top: 10px;
+}
