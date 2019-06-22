@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addTodo, toggleTodo } from '../actions';
+import { addTodo, toggleTodo, deleteTodo } from '../actions';
 
 
 
@@ -24,29 +24,47 @@ class TodoForm extends Component {
         this.props.toggleTodo(idx);
     }
 
+    handleDeleteTodo = () => {
+        this.props.deleteTodo();
+    }
+
     render() {
         return(
             <React.Fragment>
             <div>
+                <div className="heading">
+                    <h1>Todo List</h1>
+                </div>
                 <form>
-                    <label htmlFor="task">Task
-                        <input 
+                    <label className="task-label" htmlFor="task">
+                        Task
+                    </label>
+                    <input 
                             type="text" 
                             name="newTask"
                             value={this.state.newTask}
                             onChange={this.handleChange}
                         />
-                    </label>
                     <button onClick={this.handleAddTodo}>Add Task</button>
                 </form>
             </div>
-            <ul>
+            <div className="tasks">
             {this.props.todos.map((todo, idx) => (
-                <li onClick={e => this.handleToggleTodo(e, idx)} key={idx}>
+                <div  
+                    key={idx}
+                    className={todo.completed ? "completed" : null}
+                >
+                    <input 
+                        type="checkbox" 
+                        name="completed" 
+                        value={this.props.completed} 
+                        onClick={e => this.handleToggleTodo(e, idx)} 
+                    />
                     {todo.task}
-                </li>
+                    <button onClick={this.handleDeleteTodo}>Delete</button>
+                </div>
             ))}
-            </ul>
+            </div>
             </React.Fragment>
         );
     }
@@ -60,4 +78,4 @@ const mapStateToProps = state => {
 
 
 
-export default connect(mapStateToProps, { addTodo, toggleTodo})(TodoForm);
+export default connect(mapStateToProps, { addTodo, toggleTodo, deleteTodo})(TodoForm);
